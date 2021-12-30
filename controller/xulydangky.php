@@ -14,7 +14,7 @@ if(count($_POST)>0){
             }
             $_SESSION["email"]=$email;
             $_SESSION["dangKy"][$viTriKhachHangTrongDS]["email"]=$email;//them kh vao ds kh
-            $_SESSION["dangKy"][$viTriKhachHangTrongDS]["password"]=$email;
+            $_SESSION["dangKy"][$viTriKhachHangTrongDS]["password"]=$password;
             echo'
             <script>
                 window.alert("Đăng ký thành công!");
