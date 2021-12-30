@@ -40,4 +40,38 @@ if (count($_POST) > 0) {
         header("Location: ../view/tong-quan.php");
         exit();
     }
+    if (isset($_POST['btnDangKy'])) {//dang ky ************************************************
+        $txtEmail = $_POST['txtEmail'];
+        $txtPassword = $_POST['txtPassword'];
+        $txtRePassword = $_POST['txtRePassword'];
+        checkEmail($txtEmail);
+        checkPassword($txtPassword);
+        if ($txtPassword != $txtRePassword) {
+            echo '<script>
+            window.alert("Mật khẩu và nhập lại mật khẩu cần phải trùng khớp nhau!");
+            window.history.back();
+            </script>';
+            die();
+        }
+        $NguoiDung = new NguoiDung();
+        
+        $txtPassword = md5($txtPassword);
+        $NguoiDung->NguoiDung(null, $txtEmail, $txtPassword,"","","",0); //mã sản phẩm tự tăng nên không điền
+        $queryDangKy = $NguoiDung->queryDangKy();
+        $flag = $db->themHoacXoa($queryDangKy); //them vao database thanh cong thi tra ve true
+        if ($flag) {
+            session_start();
+            $_SESSION['Login'] = $txtEmail;
+            echo '<script>
+            window.alert("Đăng ký thành công!");
+            window.location.href = "../view/tong-quan.php";
+            </script>';
+            die();
+        }
+        echo '<script>
+          window.alert("Đăng ký thất bại!");
+          window.history.back();
+          </script>';
+        die();
+    }
 }
