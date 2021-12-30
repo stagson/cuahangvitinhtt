@@ -5,13 +5,13 @@ if (count($_POST) > 0 || count($_GET) > 0) {
   include '../model/sanpham.php';
   include '../model/danhmucsp.php';
   include 'hamtienich.php';
-  $db = new Database();  
+  $db = new Database();
   if (isset($_POST['btnThem'])) { //xu ly them ************************************************
     $txtTenSanPham = strip_tags($_POST['txtTenSanPham']);
     $cbxDanhMuc = (int)strip_tags($_POST['cbxDanhMuc']);
     $cbxBaoHanh = (int)strip_tags($_POST['cbxBaoHanh']);
     $numSoLuong = (int)strip_tags($_POST['numSoLuong']);
-    $numGia = (double)strip_tags($_POST['numGia']);
+    $numGia = (float)strip_tags($_POST['numGia']);
     $txtMoTa = strip_tags($_POST['txtMoTa']); //co the bo trong
     $fileHinh = $_FILES['fileHinh'];
 
@@ -23,11 +23,11 @@ if (count($_POST) > 0 || count($_GET) > 0) {
       die();
     }
     $SanPham = new SanPham();
-    
+
     $DanhMucSP = new DanhMucSP();
     $queryTimDanhMucSPTheoMa = $DanhMucSP->queryTimDanhMucSPTheoMa($cbxDanhMuc);
     $dmsp = $db->timMotDoiTuong($queryTimDanhMucSPTheoMa);
-    if($dmsp==null){
+    if ($dmsp == null) {
       echo '<script>
         window.alert("Nhập sai danh mục!");
         window.history.back();
@@ -80,13 +80,13 @@ if (count($_POST) > 0 || count($_GET) > 0) {
           </script>';
     die();
   }
-  
+
   if (isset($_POST['btnSua'])) { //xu ly sua ************************************************
     $txtTenSanPham = strip_tags($_POST['txtTenSanPham']);
     $cbxDanhMuc = (int)strip_tags($_POST['cbxDanhMuc']);
     $cbxBaoHanh = (int)strip_tags($_POST['cbxBaoHanh']);
     $numSoLuong = (int)strip_tags($_POST['numSoLuong']);
-    $numGia = (double)strip_tags($_POST['numGia']);
+    $numGia = (float)strip_tags($_POST['numGia']);
     $txtMoTa = strip_tags($_POST['txtMoTa']); //co the bo trong
     $fileHinh = $_FILES['fileHinh'];
 
@@ -100,7 +100,7 @@ if (count($_POST) > 0 || count($_GET) > 0) {
     $DanhMucSP = new DanhMucSP();
     $queryTimDanhMucSPTheoMa = $DanhMucSP->queryTimDanhMucSPTheoMa($cbxDanhMuc);
     $dmsp = $db->timMotDoiTuong($queryTimDanhMucSPTheoMa);
-    if($dmsp==null){
+    if ($dmsp == null) {
       echo '<script>
         window.alert("Nhập sai danh mục!");
         window.history.back();
@@ -169,5 +169,36 @@ if (count($_POST) > 0 || count($_GET) > 0) {
           window.history.back();
           </script>';
     die();
+  }
+
+  if (isset($_GET['action'])) { //xu ly xoa ************************************************
+    if ($_GET['action'] == "xoa" && isset($_GET['masp'])) {
+      $maSanPhamCanXoa = $_GET['masp'];
+      $SanPham = new SanPham();
+      $queryTimSanPhamTheoMa = $SanPham->queryTimSanPhamTheoMa($maSanPhamCanXoa); //tim sp can xoa
+      $sp = $db->timMotDoiTuong($queryTimSanPhamTheoMa);
+      if ($sp == null) {
+        echo '<script>
+        window.alert("Không tìm thấy sản phẩm cần xóa!");
+        window.history.back();
+        </script>';
+        die();
+      }
+      $query = $SanPham->queryXoa($maSanPhamCanXoa);
+      $flag = $db->themHoacXoa($query);
+      if ($flag) {
+        if ($sp['hinh'] > "") xoaFile($sp['hinh']);
+        echo '<script>
+        window.alert("Xóa sản phẩm thành công!");
+        window.history.back();
+        </script>';
+        die();
+      }
+      echo '<script>
+        window.alert("Xóa sản phẩm thất bại!");
+        window.history.back();
+        </script>';
+      die();
+    }
   }
 }
