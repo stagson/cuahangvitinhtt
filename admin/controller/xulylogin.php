@@ -88,7 +88,13 @@ if (count($_POST) > 0) {
         </script>';
             die();
         }
-        
+        if($newpassword!=$renewpassword){
+            echo'<script>
+            window.alert("Mật khẩu mới và nhập lại mật khẩu mới cần phải trùng khớp nhau!");
+            window.history.back();
+            </script>';
+            die();
+        }
         session_start();
         $email = $_SESSION['Login'];
         $NguoiDung = new NguoiDung();
