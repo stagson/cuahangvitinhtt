@@ -40,7 +40,7 @@ if (count($_POST) > 0) {
         header("Location: ../view/tong-quan.php");
         exit();
     }
-    if (isset($_POST['btnDangKy'])) {//dang ky ************************************************
+    if (isset($_POST['btnDangKy'])) {//dang ky *************************************************
         $txtEmail = $_POST['txtEmail'];
         $txtPassword = $_POST['txtPassword'];
         $txtRePassword = $_POST['txtRePassword'];
