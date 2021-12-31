@@ -23,7 +23,15 @@ if (count($_POST) > 0 || count($_GET) > 0) {
       die();
     }
     $SanPham = new SanPham();
-    
+    $queryTimSanPhamTheoTen = $SanPham->queryTimSanPhamTheoTen($txtTenSanPham);
+    $sp = $db->timMotDoiTuong($queryTimSanPhamTheoTen);
+    if ($sp != null) {
+      echo '<script>
+        window.alert("Tên sản phẩm đã tồn tại!");
+        window.history.back();
+        </script>';
+      die();
+    }
     $DanhMucSP = new DanhMucSP();
     $queryTimDanhMucSPTheoMa = $DanhMucSP->queryTimDanhMucSPTheoMa($cbxDanhMuc);
     $dmsp = $db->timMotDoiTuong($queryTimDanhMucSPTheoMa);
