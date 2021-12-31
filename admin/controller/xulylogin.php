@@ -54,7 +54,15 @@ if (count($_POST) > 0) {
             die();
         }
         $NguoiDung = new NguoiDung();
-
+        $queryTimEmailAdmin = $NguoiDung->queryTimEmailAdmin($txtEmail); //tìm thông tin tài khoản
+        $nguoidung = $db->timMotDoiTuong($queryTimEmailAdmin);
+        if ($nguoidung != null) {
+            echo '<script>
+            window.alert("Email đã tồn tại!");
+            window.history.back();
+            </script>';
+            die();
+        }
         $txtPassword = md5($txtPassword);
         $NguoiDung->NguoiDung(null, $txtEmail, $txtPassword, "", "", "", 0); //mã sản phẩm tự tăng nên không điền
         $queryDangKy = $NguoiDung->queryDangKy();
