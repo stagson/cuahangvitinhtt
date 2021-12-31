@@ -99,4 +99,14 @@
                           </div>
                         </div>
                           <br><br>
+                          <?php
+                          unset($_SESSION["xacThucThongTin"]);
+                          unset($_SESSION["hinhThucThanhToan"]);
+                          unset($_SESSION["tongSoLuongMua"]);
+                          unset($_SESSION["maSanPham"]);
+                          unset($_SESSION["tenHinh"]);
+                          unset($_SESSION["tenSanPham"]);
+                          unset($_SESSION["donGia"]);
+                          unset($_SESSION["soLuongMua"]);
+                          ?>
                           

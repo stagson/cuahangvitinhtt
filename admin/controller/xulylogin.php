@@ -54,7 +54,15 @@ if (count($_POST) > 0) {
             die();
         }
         $NguoiDung = new NguoiDung();
-
+        $queryTimEmailAdmin = $NguoiDung->queryTimEmailAdmin($txtEmail); //tìm thông tin tài khoản
+        $nguoidung = $db->timMotDoiTuong($queryTimEmailAdmin);
+        if ($nguoidung != null) {
+            echo '<script>
+            window.alert("Email đã tồn tại!");
+            window.history.back();
+            </script>';
+            die();
+        }
         $txtPassword = md5($txtPassword);
         $NguoiDung->NguoiDung(null, $txtEmail, $txtPassword, "", "", "", 0); //mã sản phẩm tự tăng nên không điền
         $queryDangKy = $NguoiDung->queryDangKy();
@@ -88,7 +96,13 @@ if (count($_POST) > 0) {
         </script>';
             die();
         }
-        
+        if($newpassword!=$renewpassword){
+            echo'<script>
+            window.alert("Mật khẩu mới và nhập lại mật khẩu mới cần phải trùng khớp nhau!");
+            window.history.back();
+            </script>';
+            die();
+        }
         session_start();
         $email = $_SESSION['Login'];
         $NguoiDung = new NguoiDung();
