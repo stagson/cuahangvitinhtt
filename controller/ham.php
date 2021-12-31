@@ -87,8 +87,8 @@ function themSanPhamVaoGio($maSanPhamChonMua,$soLuongMua,&$session){
 
     $viTriSP=timViTriSPtrongGioHang($maSanPhamChonMua,$session["maSanPham"]);
     if($viTriSP>-1){
-        $session['soLuongMua'][$viTriSP]=$soLuongMua;
-        $session["tongSoLuongMua"]=$soLuongMua;
+        $session['soLuongMua'][$viTriSP]+=$soLuongMua;
+        $session["tongSoLuongMua"]+=$soLuongMua;
     }else{
         $viTriSP=timViTriSPtrongDS($maSanPhamChonMua,$arrMaSP);
         if($viTriSP>-1){
